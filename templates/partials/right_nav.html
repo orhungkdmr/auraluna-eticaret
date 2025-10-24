@@ -1,0 +1,47 @@
+<div class="d-flex align-items-center">
+
+    <ul class="navbar-nav flex-row align-items-center">
+        {% if user.is_authenticated %}
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="bi bi-person-circle fs-5"></i>
+                </a>
+                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                    <li class="dropdown-header">Merhaba, {{ user.username }}</li>
+                    <li><a class="dropdown-item" href="{% url 'orders:order_history' %}"><i class="bi bi-box-seam"></i> Siparişlerim</a></li>
+                    <li><a class="dropdown-item" href="{% url 'products:favourite_list' %}"><i class="bi bi-heart-fill"></i> Favorilerim</a></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li>
+                        <form class="d-inline" action="{% url 'logout' %}" method="post">
+                            {% csrf_token %}
+                            <button type="submit" class="dropdown-item"><i class="bi bi-box-arrow-right"></i> Çıkış Yap</button>
+                        </form>
+                    </li>
+                </ul>
+            </li>
+        {% else %}
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'login' %}">Giriş Yap</a>
+            </li>
+            <li class="nav-item ms-2">
+                <a class="nav-link btn btn-signup" href="{% url 'accounts:signup' %}">
+                    Kayıt Ol
+                </a>
+            </li>
+        {% endif %}
+    </ul>
+
+    <ul class="navbar-nav ms-3">
+        <li class="nav-item">
+            <a class="nav-link position-relative" href="{% url 'cart:cart_detail' %}">
+                <i class="bi bi-cart fs-5"></i>
+                <span id="cart-counter" 
+                      class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" 
+                      style="display: {% if cart|length > 0 %}inline-block{% else %}none{% endif %};">
+                      {{ cart|length }}
+                </span>
+            </a>
+        </li>
+    </ul>
+
+</div>

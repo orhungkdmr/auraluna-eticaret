@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container my-5">
+    <div class="row">
+        <div class="col-md-3">
+            <h3 class="mb-3">Kategoriler</h3>
+            
+            <a href="{% url 'products:product_list' %}" class="sidebar-main-link {% if not current_category %}active{% endif %}">
+                Tüm Ürünler
+            </a>
+            <div class="accordion accordion-flush" id="categoryAccordion">
+                {% for category in main_categories %}
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="heading-{{ category.slug }}">
+                        <a href="{{ category.get_absolute_url }}" class="sidebar-main-link {% if current_category.slug == category.slug or current_category.parent.slug == category.slug %}active{% endif %}">
+                            {{ category.name }}
+                        </a>
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-{{ category.slug }}">
+                        </button>
+                    </h2>
+                    {% with parent_category=current_category.parent|default:current_category %}
+                    <div id="collapse-{{ category.slug }}" class="accordion-collapse collapse {% if parent_category.slug == category.slug %}show{% endif %}" data-bs-parent="#categoryAccordion">
+                        <div class="accordion-body">
+                            <ul class="list-unstyled sidebar-submenu">
+                                {% for child in category.children.all %}
+                                <li>
+                                    <a href="{{ child.get_absolute_url }}" class="{% if current_category.slug == child.slug %}active{% endif %}">
+                                        {{ child.name }}
+                                    </a>
+                                </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                    {% endwith %}
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <div class="col-md-9">
+            <h1 class="mb-4">{% if current_category %}{{ current_category.name }}{% else %}Ürünlerimiz{% endif %}</h1>
+            <div class="row">
+                {% for product in page_obj %}
+                    <div class="col-lg-4 col-md-6 mb-4">
+                        <div class="card h-100">
+                            <div class="card-overlay-actions">
+                                <button class="btn btn-light btn-sm quick-view-btn" data-bs-toggle="modal" data-bs-target="#quickViewModal" data-slug="{{ product.slug }}">
+                                    <i class="bi bi-eye"></i> Hızlı Bakış
+                                </button>
+                            </div>
+                            {% if user.is_authenticated %}<a href="{% url 'products:toggle_favourite' product.slug %}" class="favourite-icon js-toggle-favourite">{% if user in product.favourited_by.all %}<i class="bi bi-heart-fill"></i>{% else %}<i class="bi bi-heart"></i>{% endif %}</a>{% endif %}
+                            {% if product.image %}<a href="{{ product.get_absolute_url }}"><img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.name }}"></a>{% endif %}
+                            <div class="card-body d-flex flex-column">
+                                <h5 class="card-title"><a href="{{ product.get_absolute_url }}" class="text-dark text-decoration-none">{{ product.name }}</a></h5>
+                                {% with first_variant=product.variants.first %}
+                                    {% if first_variant %}
+                                        <h6 class="card-subtitle mb-2 text-muted">{{ first_variant.price }} TL</h6>
+                                    {% endif %}
+                                {% endwith %}
+                                <div class="mt-auto">
+                                   <a href="{{ product.get_absolute_url }}" class="btn btn-outline-primary w-100">Seçenekleri Gör</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% empty %}
+                    <div class="col">
+                        <div class="alert alert-info">Bu kategoride veya aramanızla eşleşen ürün bulunamadı.</div>
+                    </div>
+                {% endfor %}
+            </div>
+            {% include "pagination.html" with page=page_obj %}
+        </div>
+    </div>
+</div>
+{% endblock %}

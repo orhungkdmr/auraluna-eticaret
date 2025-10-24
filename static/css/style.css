@@ -1,0 +1,88 @@
+/* static/css/style.css (Nihai Tam ve Güncel Hali) */
+
+/* --- Genel Stiller ve Yazı Tipleri --- */
+body { font-family: 'Lato', sans-serif; background-color: #f8f9fa; }
+h1, h2, h3, h4, h5, h6 { font-family: 'Playfair Display', serif; }
+.main-content { padding-top: 150px; } /* Header'ın altına içerik gelmemesi için */
+
+/* --- YENİ HEADER ve NAVİGASYON YAPISI --- */
+.site-header {
+    background-color: #ffffff;
+    border-bottom: 1px solid #dee2e6;
+    position: sticky;
+    top: 0;
+    z-index: 1020;
+}
+.header-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+}
+.header-search { width: 33.33%; }
+.header-search .form-control { border: none; border-radius: 0; border-bottom: 1px solid #ced4da; padding-left: 0; }
+.header-search .form-control:focus { box-shadow: none; border-bottom-color: #000; }
+.header-search .btn { padding-left: 0; }
+.header-search .btn:focus { box-shadow: none; }
+.header-logo { width: 33.33%; text-align: center; }
+.header-logo img { height: 100px; width: auto; }
+
+/* Sağ İkonlar İçin Özel Hizalama */
+.header-icons {
+    width: 33.33%;
+    display: flex;
+    justify-content: flex-end; /* İçeriği en sağa yasla */
+}
+.header-icons .nav-link { color: #212529 !important; }
+.header-icons .navbar-nav { flex-direction: row !important; } /* Mobil menüden gelen dikey sıralamayı ezer */
+
+/* Alt Katman: Ana Menü Linkleri */
+.header-main-nav { border-top: 1px solid #dee2e6; padding: 5px 0; }
+.header-main-nav .nav-link { color: #212529 !important; font-weight: bold; text-transform: uppercase; font-size: 0.9rem; }
+.header-main-nav .nav-link:hover { color: #008080 !important; }
+
+/* --- Ana Sayfa Karuseli ve Diğer Stiller... --- */
+.hero-swiper { width: 100%; height: calc(100vh - 150px); margin-top: -150px; }
+.hero-slide { background-image: var(--slide-bg-image); background-size: cover; background-position: center; position: relative; display: flex; align-items: center; justify-content: center; }
+.hero-overlay { position: absolute; top: 0; left: 0; right: 0; bottom: 0; background-color: rgba(0, 0, 0, 0.4); }
+.hero-content { position: relative; z-index: 2; color: white; }
+.card { transition: transform 0.3s ease, box-shadow 0.3s ease; border: none; border-radius: 8px; position: relative; }
+.card:hover { transform: translateY(-8px); box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12); }
+.btn { transition: background-color 0.3s ease, transform 0.2s ease, color 0.3s ease; border-radius: 50px; padding: 10px 20px; font-weight: bold; }
+.btn:hover { transform: scale(1.05); }
+.favourite-icon { position: absolute; top: 10px; right: 10px; z-index: 10; font-size: 1.5rem; color: #dc3545; text-decoration: none; transition: transform 0.2s ease; }
+.favourite-icon:hover { transform: scale(1.2); }
+.card .card-overlay-actions { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 10; opacity: 0; visibility: hidden; transition: opacity 0.3s ease, visibility 0.3s ease; }
+.card:hover .card-overlay-actions { opacity: 1; visibility: visible; }
+.card:hover .card-img-top { filter: brightness(0.6); transition: filter 0.3s ease; }
+.btn-signup { background-color: #008080; color: #ffffff; padding: 8px 16px !important; }
+.btn-signup:hover { background-color: #006666; color: #ffffff; }
+.variant-swatch { border: 2px solid #343a40; background-color: #ffffff; color: #343a40; padding: 8px 15px; cursor: pointer; border-radius: 4px; transition: all 0.2s ease; user-select: none; min-width: 50px; text-align: center; font-weight: 500; }
+.variant-swatch:hover { background-color: #f8f9fa; transform: translateY(-2px); }
+.variant-swatch.selected { border-color: #000000; background-color: #000000; color: #ffffff; font-weight: bold; transform: translateY(-2px); }
+.variant-swatch.disabled { background-color: #e9ecef; color: #adb5bd; cursor: not-allowed; text-decoration: line-through; border-color: #dee2e6; transform: none; }
+.quantity-selector { display: flex; }
+.quantity-selector .form-control { width: 60px; text-align: center; border-radius: 0; }
+.quantity-selector .btn { width: 40px; padding: 8px 12px; border-radius: 0; }
+.product-gallery { display: flex; gap: 1rem; }
+.thumbnail-container { display: flex; flex-direction: column; gap: 0.75rem; width: 80px; flex-shrink: 0; }
+.thumbnail-img { width: 100%; height: auto; border: 2px solid transparent; border-radius: 4px; cursor: pointer; transition: border-color 0.2s ease; }
+.thumbnail-img:hover { border-color: #dee2e6; }
+.thumbnail-img.active { border-color: #000000; }
+.main-image-container { flex-grow: 1; }
+.category-showcase-card { text-decoration: none; display: block; overflow: hidden; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+.category-showcase-card .card-img { transition: transform 0.4s ease; }
+.category-showcase-card:hover .card-img { transform: scale(1.05); }
+.category-showcase-card .card-img-overlay { background-color: rgba(0, 0, 0, 0.4); }
+.sidebar-main-link { font-weight: bold; color: #212529; text-decoration: none; display: block; padding: 0.5rem 0; font-size: 1.1rem; }
+.sidebar-main-link.active { color: #008080; }
+.accordion-item { border: none; background-color: transparent; }
+.accordion-header { display: flex; align-items: center; border-bottom: 1px solid #dee2e6; }
+.accordion-header .sidebar-main-link { flex-grow: 1; }
+.accordion-button { background-color: transparent !important; box-shadow: none !important; padding: 0.5rem 0.5rem 0.5rem 0; width: auto; }
+.accordion-body { padding: 0; }
+.sidebar-submenu { padding-left: 1rem; padding-top: 0.5rem; padding-bottom: 1rem; border-bottom: 1px solid #dee2e6; }
+.sidebar-submenu a { color: #6c757d; text-decoration: none; display: block; padding: 0.3rem 0; }
+.sidebar-submenu a:hover { color: #212529; }
+.sidebar-submenu a.active { font-weight: bold; color: #212529; }
+.order-summary-card { border: 1px solid #dee2e6; border-radius: 8px; }
